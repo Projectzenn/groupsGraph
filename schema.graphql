@@ -1,0 +1,49 @@
+type CompanyAccepted @entity(immutable: true) {
+  id: Bytes!
+  accepted: Bytes! # address
+  company: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type CompanyRejected @entity(immutable: true) {
+  id: Bytes!
+  companyId: BigInt! # uint256
+  name: String! # string
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type CompanyRemoved @entity(immutable: true) {
+  id: Bytes!
+  companyId: BigInt! # uint256
+  company: Bytes! # address
+  remover: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type GroupCreated @entity(immutable: true) {
+  id: Bytes!
+  companyId: BigInt! # uint256
+  name: String! # string
+  image: String! # string
+  details: String! # string
+  creator: Bytes! # address
+  addr: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type OwnershipTransferred @entity(immutable: true) {
+  id: Bytes!
+  previousOwner: Bytes! # address
+  newOwner: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
