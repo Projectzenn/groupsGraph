@@ -1,49 +1,55 @@
-type CompanyAccepted @entity(immutable: true) {
-  id: Bytes!
-  accepted: Bytes! # address
-  company: Bytes! # address
-  blockNumber: BigInt!
+type GroupCreated @entity(immutable:true) {
+  id: String!
+  name: String!
+  image: String!
+  details: String!
+  creator: Bytes!
+  addr: Bytes!
+  achievements: [Achievement!]! @derivedFrom(field: "group")
+  members: [Member!]! @derivedFrom(field: "group")
+    blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
 }
 
-type CompanyRejected @entity(immutable: true) {
-  id: Bytes!
-  companyId: BigInt! # uint256
-  name: String! # string
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
+type Achievement @entity {
+  id: ID!
+  group: GroupCreated!
+  description: String
+  locked: Boolean
 }
 
-type CompanyRemoved @entity(immutable: true) {
-  id: Bytes!
-  companyId: BigInt! # uint256
-  company: Bytes! # address
-  remover: Bytes! # address
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
+type Member @entity {
+  id: ID!
+  group: GroupCreated!
+  address: Bytes
+  tokenboundAccount: Bytes
 }
 
-type GroupCreated @entity(immutable: true) {
-  id: Bytes!
-  companyId: BigInt! # uint256
-  name: String! # string
-  image: String! # string
-  details: String! # string
-  creator: Bytes! # address
-  addr: Bytes! # address
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
+type AchievementContract @entity {
+  id: ID!
+  group: GroupCreated!
+  creationTime: BigInt
 }
 
-type OwnershipTransferred @entity(immutable: true) {
-  id: Bytes!
-  previousOwner: Bytes! # address
-  newOwner: Bytes! # address
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
+type AchievementReward @entity {
+  id: ID!
+  member: Member!
+  achievementId: BigInt
+  achievement: Achievement!
+  amount: BigInt
+}
+
+type GroupTokenContract @entity {
+  id: ID!
+  group: GroupCreated!
+  totalSupply: BigInt
+  balanceOfs: [BigInt!]!
+}
+
+type AchievementBatchRewarded @entity {
+  id: ID!
+  member: String!
+  achievementIds: [BigInt!]!
+  amounts: [BigInt!]!
 }

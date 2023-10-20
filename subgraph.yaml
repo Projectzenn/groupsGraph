@@ -6,31 +6,56 @@ dataSources:
     name: GroupRegistry
     network: mumbai
     source:
-      address: "0x92B09B4b7e36bFc5111e222694877AF4A17Cef5f"
+      address: "0x81552b688eeE0b1daBeEc3e9b6a45ff2FF062e05"
       abi: GroupRegistry
-      startBlock: 41043395
+      startBlock: 41430854
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
         - CompanyAccepted
-        - CompanyRejected
-        - CompanyRemoved
-        - GroupCreated
-        - OwnershipTransferred
       abis:
         - name: GroupRegistry
           file: ./abis/GroupRegistry.json
       eventHandlers:
-        - event: CompanyAccepted(address,address)
-          handler: handleCompanyAccepted
-        - event: CompanyRejected(indexed uint256,indexed string)
-          handler: handleCompanyRejected
-        - event: CompanyRemoved(indexed uint256,address,indexed address)
-          handler: handleCompanyRemoved
         - event: GroupCreated(uint256,string,string,string,address,address)
           handler: handleGroupCreated
-        - event: OwnershipTransferred(indexed address,indexed address)
-          handler: handleOwnershipTransferred
       file: ./src/group-registry.ts
+templates:
+  - name: GroupToken
+    kind: ethereum/contract
+    network: mumbai
+    source:
+      abi: GroupToken
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - AchievementAdded
+        - MemberCreated
+        - GroupUpdated
+        - AchievementContractCreated
+        - AchievementRewarded
+        - AchievementBatchRewarded
+      abis:
+        - name: GroupToken
+          file: ./abis/GroupToken.json
+      eventHandlers:
+        - event: AchievementAdded(indexed uint256,string,bool)
+          handler: handleAchievementAdded
+        - event: MemberCreated(address,uint256,address)
+          handler: handleMemberCreated
+        - event: GroupUpdated(string,string,string)
+          handler: handleGroupUpdated
+        - event: AchievementContractCreated(address,uint256)
+          handler: handleAchievementContractCreated
+        - event: AchievementRewarded(address,uint256,uint256)
+          handler: handleAchievementRewarded
+        - event: AchievementBatchRewarded(address,uint256[],uint256[])
+          handler: handleAchievementBatchRewarded
+      file: ./src/group-token.ts
+        
+        
+      
