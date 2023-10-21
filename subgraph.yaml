@@ -56,6 +56,23 @@ templates:
         - event: AchievementBatchRewarded(address,uint256[],uint256[])
           handler: handleAchievementBatchRewarded
       file: ./src/group-token.ts
-        
+  - name: TokenMetadata
+    kind: file/ipfs
+    mapping:
+        apiVersion: 0.0.7
+        language: wasm/assemblyscript
+        file: ./src/group-token.ts
+        handler: handleMetadata
+        entities:
+            - NFTMetadata
+            - Developer
+            - Attributes
+            - Level
+            - Properties
+        abis:
+            - name: GroupToken
+              file: ./abis/GroupToken.json
+features:
+    - fullTextSearch
         
       

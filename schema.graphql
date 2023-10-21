@@ -16,6 +16,7 @@ type Achievement @entity {
   id: ID!
   group: GroupCreated!
   description: String
+  metadata: NFTMetadata
   locked: Boolean
 }
 
@@ -52,4 +53,46 @@ type AchievementBatchRewarded @entity {
   member: String!
   achievementIds: [BigInt!]!
   amounts: [BigInt!]!
+}
+
+type NFTMetadata @entity {
+  id: String!
+  name: String
+  description: String
+  image: String
+  externalUrl: String
+  animationUrl: String
+  youtubeUrl: String
+  backgroundColor: String
+  attributes: [Attribute!]
+  properties: Properties
+  levels: [Level!]
+  developer: Developer
+  createdDate: String
+  category: String
+  achievement: Achievement
+}
+
+type Attribute @entity {
+  id: ID!
+  traitType: String
+  value: String
+}
+
+type Properties @entity {
+  id: ID!
+  level: String
+  type: String
+}
+
+type Level @entity {
+  id: ID!
+  level: Int
+  name: String
+}
+
+type Developer @entity {
+  id: ID!
+  project: String
+  version: String
 }

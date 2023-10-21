@@ -244,6 +244,23 @@ export class Achievement extends Entity {
     }
   }
 
+  get metadata(): string | null {
+    let value = this.get("metadata");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set metadata(value: string | null) {
+    if (!value) {
+      this.unset("metadata");
+    } else {
+      this.set("metadata", Value.fromString(<string>value));
+    }
+  }
+
   get locked(): boolean {
     let value = this.get("locked");
     if (!value || value.kind == ValueKind.NULL) {
@@ -693,6 +710,578 @@ export class AchievementBatchRewarded extends Entity {
 
   set amounts(value: Array<BigInt>) {
     this.set("amounts", Value.fromBigIntArray(value));
+  }
+}
+
+export class NFTMetadata extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save NFTMetadata entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type NFTMetadata must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("NFTMetadata", id.toString(), this);
+    }
+  }
+
+  static loadInBlock(id: string): NFTMetadata | null {
+    return changetype<NFTMetadata | null>(
+      store.get_in_block("NFTMetadata", id)
+    );
+  }
+
+  static load(id: string): NFTMetadata | null {
+    return changetype<NFTMetadata | null>(store.get("NFTMetadata", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toString();
+    }
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get name(): string | null {
+    let value = this.get("name");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set name(value: string | null) {
+    if (!value) {
+      this.unset("name");
+    } else {
+      this.set("name", Value.fromString(<string>value));
+    }
+  }
+
+  get description(): string | null {
+    let value = this.get("description");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set description(value: string | null) {
+    if (!value) {
+      this.unset("description");
+    } else {
+      this.set("description", Value.fromString(<string>value));
+    }
+  }
+
+  get image(): string | null {
+    let value = this.get("image");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set image(value: string | null) {
+    if (!value) {
+      this.unset("image");
+    } else {
+      this.set("image", Value.fromString(<string>value));
+    }
+  }
+
+  get externalUrl(): string | null {
+    let value = this.get("externalUrl");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set externalUrl(value: string | null) {
+    if (!value) {
+      this.unset("externalUrl");
+    } else {
+      this.set("externalUrl", Value.fromString(<string>value));
+    }
+  }
+
+  get animationUrl(): string | null {
+    let value = this.get("animationUrl");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set animationUrl(value: string | null) {
+    if (!value) {
+      this.unset("animationUrl");
+    } else {
+      this.set("animationUrl", Value.fromString(<string>value));
+    }
+  }
+
+  get youtubeUrl(): string | null {
+    let value = this.get("youtubeUrl");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set youtubeUrl(value: string | null) {
+    if (!value) {
+      this.unset("youtubeUrl");
+    } else {
+      this.set("youtubeUrl", Value.fromString(<string>value));
+    }
+  }
+
+  get backgroundColor(): string | null {
+    let value = this.get("backgroundColor");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set backgroundColor(value: string | null) {
+    if (!value) {
+      this.unset("backgroundColor");
+    } else {
+      this.set("backgroundColor", Value.fromString(<string>value));
+    }
+  }
+
+  get attributes(): Array<string> | null {
+    let value = this.get("attributes");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toStringArray();
+    }
+  }
+
+  set attributes(value: Array<string> | null) {
+    if (!value) {
+      this.unset("attributes");
+    } else {
+      this.set("attributes", Value.fromStringArray(<Array<string>>value));
+    }
+  }
+
+  get properties(): string | null {
+    let value = this.get("properties");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set properties(value: string | null) {
+    if (!value) {
+      this.unset("properties");
+    } else {
+      this.set("properties", Value.fromString(<string>value));
+    }
+  }
+
+  get levels(): Array<string> | null {
+    let value = this.get("levels");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toStringArray();
+    }
+  }
+
+  set levels(value: Array<string> | null) {
+    if (!value) {
+      this.unset("levels");
+    } else {
+      this.set("levels", Value.fromStringArray(<Array<string>>value));
+    }
+  }
+
+  get developer(): string | null {
+    let value = this.get("developer");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set developer(value: string | null) {
+    if (!value) {
+      this.unset("developer");
+    } else {
+      this.set("developer", Value.fromString(<string>value));
+    }
+  }
+
+  get createdDate(): string | null {
+    let value = this.get("createdDate");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set createdDate(value: string | null) {
+    if (!value) {
+      this.unset("createdDate");
+    } else {
+      this.set("createdDate", Value.fromString(<string>value));
+    }
+  }
+
+  get category(): string | null {
+    let value = this.get("category");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set category(value: string | null) {
+    if (!value) {
+      this.unset("category");
+    } else {
+      this.set("category", Value.fromString(<string>value));
+    }
+  }
+
+  get achievement(): string | null {
+    let value = this.get("achievement");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set achievement(value: string | null) {
+    if (!value) {
+      this.unset("achievement");
+    } else {
+      this.set("achievement", Value.fromString(<string>value));
+    }
+  }
+}
+
+export class Attribute extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save Attribute entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type Attribute must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("Attribute", id.toString(), this);
+    }
+  }
+
+  static loadInBlock(id: string): Attribute | null {
+    return changetype<Attribute | null>(store.get_in_block("Attribute", id));
+  }
+
+  static load(id: string): Attribute | null {
+    return changetype<Attribute | null>(store.get("Attribute", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toString();
+    }
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get traitType(): string | null {
+    let value = this.get("traitType");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set traitType(value: string | null) {
+    if (!value) {
+      this.unset("traitType");
+    } else {
+      this.set("traitType", Value.fromString(<string>value));
+    }
+  }
+
+  get value(): string | null {
+    let value = this.get("value");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set value(value: string | null) {
+    if (!value) {
+      this.unset("value");
+    } else {
+      this.set("value", Value.fromString(<string>value));
+    }
+  }
+}
+
+export class Properties extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save Properties entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type Properties must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("Properties", id.toString(), this);
+    }
+  }
+
+  static loadInBlock(id: string): Properties | null {
+    return changetype<Properties | null>(store.get_in_block("Properties", id));
+  }
+
+  static load(id: string): Properties | null {
+    return changetype<Properties | null>(store.get("Properties", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toString();
+    }
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get level(): string | null {
+    let value = this.get("level");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set level(value: string | null) {
+    if (!value) {
+      this.unset("level");
+    } else {
+      this.set("level", Value.fromString(<string>value));
+    }
+  }
+
+  get type(): string | null {
+    let value = this.get("type");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set type(value: string | null) {
+    if (!value) {
+      this.unset("type");
+    } else {
+      this.set("type", Value.fromString(<string>value));
+    }
+  }
+}
+
+export class Level extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save Level entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type Level must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("Level", id.toString(), this);
+    }
+  }
+
+  static loadInBlock(id: string): Level | null {
+    return changetype<Level | null>(store.get_in_block("Level", id));
+  }
+
+  static load(id: string): Level | null {
+    return changetype<Level | null>(store.get("Level", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toString();
+    }
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get level(): i32 {
+    let value = this.get("level");
+    if (!value || value.kind == ValueKind.NULL) {
+      return 0;
+    } else {
+      return value.toI32();
+    }
+  }
+
+  set level(value: i32) {
+    this.set("level", Value.fromI32(value));
+  }
+
+  get name(): string | null {
+    let value = this.get("name");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set name(value: string | null) {
+    if (!value) {
+      this.unset("name");
+    } else {
+      this.set("name", Value.fromString(<string>value));
+    }
+  }
+}
+
+export class Developer extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save Developer entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type Developer must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("Developer", id.toString(), this);
+    }
+  }
+
+  static loadInBlock(id: string): Developer | null {
+    return changetype<Developer | null>(store.get_in_block("Developer", id));
+  }
+
+  static load(id: string): Developer | null {
+    return changetype<Developer | null>(store.get("Developer", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toString();
+    }
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get project(): string | null {
+    let value = this.get("project");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set project(value: string | null) {
+    if (!value) {
+      this.unset("project");
+    } else {
+      this.set("project", Value.fromString(<string>value));
+    }
+  }
+
+  get version(): string | null {
+    let value = this.get("version");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set version(value: string | null) {
+    if (!value) {
+      this.unset("version");
+    } else {
+      this.set("version", Value.fromString(<string>value));
+    }
   }
 }
 
