@@ -24,7 +24,9 @@ export function handleAchievementAdded(event: AchievementAdded): void {
   let group = GroupCreated.load(event.address.toHex());
   if (group == null) return;
 
-  let achievement = new Achievement(event.params.achievementId.toHex());
+  let achievement = new Achievement(event.params.achievementId.toHex() + "-" + event.address.toHex());
+  achievement.id = event.params.achievementId.toHex() + "-" + event.address.toHex()
+  achievement.tokenId = event.params.achievementId;
   achievement.group = group.id;
   achievement.description = event.params.description;
   achievement.locked = event.params.locked;
@@ -173,6 +175,7 @@ export function handleAchievementContractCreated(
   let achievementContract = new AchievementContract(
     event.params.achievementContract.toHex()
   );
+
   achievementContract.group = group.id;
   achievementContract.creationTime = event.params.creationTime;
   achievementContract.save();
@@ -182,7 +185,7 @@ export function handleAchievementRewarded(event: AchievementRewarded): void {
   let member = Member.load(event.params.member.toHex());
   if (member == null) return;
 
-  let achievement = Achievement.load(event.params.achievementId.toHex());
+  let achievement = Achievement.load(event.params.achievementId.toHex() + "-" + event.address.toHex());
   if (achievement == null) return;
 
   let reward = new AchievementReward(

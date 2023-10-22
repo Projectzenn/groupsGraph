@@ -1,4 +1,4 @@
-type GroupCreated @entity(immutable:true) {
+type GroupCreated @entity(immutable: true) {
   id: String!
   name: String!
   image: String!
@@ -7,13 +7,14 @@ type GroupCreated @entity(immutable:true) {
   addr: Bytes!
   achievements: [Achievement!]! @derivedFrom(field: "group")
   members: [Member!]! @derivedFrom(field: "group")
-    blockNumber: BigInt!
+  blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
 }
 
 type Achievement @entity {
-  id: ID!
+  id: String!
+  tokenId: BigInt!
   group: GroupCreated!
   description: String
   metadata: NFTMetadata

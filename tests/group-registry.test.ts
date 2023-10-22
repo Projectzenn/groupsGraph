@@ -1,17 +1,13 @@
+import { Address } from "@graphprotocol/graph-ts"
 import {
+  afterAll,
   assert,
-  describe,
-  test,
-  clearStore,
   beforeAll,
-  afterAll
+  clearStore,
+  describe,
+  test
 } from "matchstick-as/assembly/index"
-import { Address, BigInt } from "@graphprotocol/graph-ts"
-import { CompanyAccepted } from "../generated/schema"
-import { CompanyAccepted as CompanyAcceptedEvent } from "../generated/GroupRegistry/GroupRegistry"
-import { handleCompanyAccepted } from "../src/group-registry"
 import { createCompanyAcceptedEvent } from "./group-registry-utils"
-
 // Tests structure (matchstick-as >=0.5.0)
 // https://thegraph.com/docs/en/developer/matchstick/#tests-structure-0-5-0
 
